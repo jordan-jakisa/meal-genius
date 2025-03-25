@@ -2,7 +2,11 @@
 
 ## 1. App Overview
 
-MealGenius is a cross-platform application designed to help users plan their meals based on their preferences, goals, and activity levels. The app collects user information during onboarding and uses this data to generate personalized weekly meal plans using OpenAI's GPT-4o model. Users can refresh their meal plans weekly, shuffle meals, and interact with a chatbot to customize their meal plans or add new dishes.
+MealGenius is a cross-platform application designed to help users plan their meals based on their preferences, goals,
+and activity levels. The app collects user information during onboarding and uses this data to generate personalized
+weekly meal plans. Users can refresh their meal plans, shuffle meals, and interact with a chatbot to customize their
+meal plans or add new dishes. The app is built using Kotlin Multiplatform and Compose Multiplatform, allowing it to run
+on Android, iOS, and desktop platforms.
 
 ## 2. User Onboarding Process
 
@@ -85,17 +89,21 @@ The following diagram illustrates the user flow through the MealGenius applicati
       - Chatbot provides responses and updates the meal plan accordingly
 
 ### 3.3 Navigation Patterns
-- The app uses a bottom navigation bar for main sections
+
+- The app uses a bottom navigation bar for main sections (Home, Chat, Shopping, History)
+    - State-based navigation for switching between main screens
+    - Back button functionality for returning to previous screens
   - Modal dialogs for quick actions and confirmations
-  - Side drawer for additional settings and options
-  - Back button functionality follows platform conventions
+    - Navigation callbacks for handling user interactions
 
 ## 4. Meal Plan Generation
 
-### 4.1 Integration with OpenAI GPT-4o
-- The app will use OpenAI's GPT-4o model to generate personalized meal plans
-  - API integration with appropriate authentication and error handling
-  - Prompt engineering to ensure high-quality, relevant meal plans
+### 4.1 Meal Plan Generation
+
+- The app provides a framework for generating personalized meal plans
+    - Currently displays sample meal data in the UI
+    - Prepared for future integration with AI models or other meal generation services
+    - UI components in place for displaying and interacting with meal plans
 
 ### 4.2 Personalization Factors
 - Generated meal plans will consider:
@@ -143,33 +151,45 @@ The following diagram illustrates the user flow through the MealGenius applicati
 
 ## 7. Chatbot Implementation
 
-### 7.1 Meal Plan Customization
-- Users can interact with a chatbot to customize their meal plans
-  - Natural language processing to understand user requests
-  - Integration with GPT-4o for intelligent responses
+### 7.1 Chatbot Interface
 
-### 7.2 Adding New Dishes
-- Users can describe new dishes they prepare through the chatbot
-  - The chatbot will help structure the information (ingredients, preparation steps, etc.)
-  - New dishes will be added to the user's profile and considered in future meal plans
+- The app implements a chat interface for user interaction
+    - Message display with user and assistant messages visually distinguished
+    - Text input field for typing messages
+    - Send button for submitting messages
+    - Auto-scrolling to show the latest messages
 
-### 7.3 Dietary Advice
-- The chatbot can provide dietary advice based on user goals
-  - Answer questions about nutrition, ingredients, and cooking techniques
-  - Suggest alternatives for ingredients based on dietary restrictions
+### 7.2 Quick Actions
+
+- The chatbot provides quick action buttons for common requests
+    - "Customize Plan" for meal plan customization
+    - "Add New Dish" for adding new dishes
+    - "Get Advice" for receiving dietary tips
+    - These actions trigger simulated responses in the current implementation
+
+### 7.3 Simulated Responses
+
+- The current implementation uses simulated responses
+    - Predefined messages based on user input
+    - UI prepared for future integration with more advanced AI capabilities
+    - Framework in place for handling more complex interactions
 
 ## 8. Technical Requirements
 
 ### 8.1 Architecture
-- Follow clean architecture principles with separation of concerns:
-  - Presentation layer (UI components)
-  - Domain layer (business logic)
-  - Data layer (data sources and repositories)
+
+- The app follows clean architecture principles with separation of concerns:
+    - Presentation layer (UI components, screens, and ViewModels)
+    - Domain layer (business logic and use cases)
+    - Data layer (data models and repositories)
+- The app uses the MVVM (Model-View-ViewModel) pattern for the presentation layer
 
 ### 8.2 Cross-Platform Support
-- Implement using Kotlin Multiplatform for code sharing
+
+- Implemented using Kotlin Multiplatform for code sharing
   - Support for Android, iOS, and desktop platforms
-  - Use Compose Multiplatform for UI development
+  - Uses Compose Multiplatform for UI development
+  - Shared UI components and business logic across platforms
 
 ### 8.3 Data Storage
 - Secure storage of user preferences
@@ -203,10 +223,12 @@ The following diagram illustrates the user flow through the MealGenius applicati
   - Queue changes to be synchronized when online
 
 ### 9.4 Design System
-- Implement Material Design 3 for consistent UI components and theming
-  - Use Material 3 color system for dynamic theming
-  - Follow Material 3 component guidelines for UI elements
-  - Support both light and dark themes
+
+- The app implements Material Design 3 for consistent UI components and theming
+    - Uses Material 3 components such as TopAppBar, NavigationBar, Card, Button, etc.
+    - Follows Material 3 component guidelines for UI elements
+    - Implements consistent spacing and typography
+    - Supports both light and dark themes (through MaterialTheme)
 
 ## 10. Security and Privacy
 
