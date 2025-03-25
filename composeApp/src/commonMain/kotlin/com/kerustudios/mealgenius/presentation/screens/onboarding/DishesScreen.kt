@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -18,18 +21,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 
 /**
  * Screen for selecting prepared dishes
  */
 @Composable
 fun DishesScreen(
-    preparedDishes: List<String>,
-    onSaveDishes: (List<String>) -> Unit,
-    onNext: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController,
 ) {
+    val preparedDishes: List<String> = emptyList()
+    val onSaveDishes: (List<String>) -> Unit = {}
     val selectedDishes = remember { mutableStateListOf<String>().apply { addAll(preparedDishes) } }
+    val onNext: () -> Unit = {
+        navController.navigate(Destinations.Goals.route)
+    }
+    val onBack: () -> Unit = {
+        navController.navigateUp()
+    }
     
     // Sample dishes if the list is empty
     val availableDishes = if (preparedDishes.isEmpty()) {

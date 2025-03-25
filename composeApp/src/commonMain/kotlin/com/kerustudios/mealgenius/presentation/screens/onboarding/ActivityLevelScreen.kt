@@ -10,28 +10,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.kerustudios.mealgenius.data.models.ActivityLevel
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 
 /**
  * Screen for selecting activity level
  */
 @Composable
 fun ActivityLevelScreen(
-    selectedLevel: ActivityLevel,
-    onSaveActivityLevel: (ActivityLevel) -> Unit,
-    onNext: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController
 ) {
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(selectedLevel) }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,14 +63,14 @@ fun ActivityLevelScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .selectable(
-                            selected = (level == selectedOption),
-                            onClick = { onOptionSelected(level) }
+                            selected = (true),
+                            onClick = { }
                         )
                         .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = (level == selectedOption),
+                        selected = (true),
                         onClick = null // null because we're handling selection in the Row's selectable modifier
                     )
                     Column(
@@ -98,14 +97,13 @@ fun ActivityLevelScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = onBack) {
+            Button(onClick = { navController.navigate(Destinations.Welcome.route) }) {
                 Text("Back")
             }
             
             Button(
                 onClick = {
-                    onSaveActivityLevel(selectedOption)
-                    onNext()
+                    navController.navigate(Destinations.ActivityLevelDestination.route)
                 }
             ) {
                 Text("Next")

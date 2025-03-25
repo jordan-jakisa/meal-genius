@@ -1,18 +1,42 @@
 package com.kerustudios.mealgenius.presentation.screens.main
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 
 /**
  * Screen displaying the history of meal plans
@@ -20,9 +44,10 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealPlanHistoryScreen(
-    onBack: () -> Unit,
-    onReusePlan: (String) -> Unit
+    navController: NavController
 ) {
+    val onBack: () -> Unit = { navController.navigateUp() }
+    val onReusePlan: (String) -> Unit = {}
     // Sample history data
     val historyItems = listOf(
         MealPlanHistoryItem(
@@ -62,6 +87,34 @@ fun MealPlanHistoryScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            BottomAppBar {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text("Home") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.Home.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
+                    label = { Text("Chat") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.Chatbot.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Shopping") },
+                    label = { Text("Shopping") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.ShoppingList.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "History") },
+                    label = { Text("History") },
+                    selected = true,
+                    onClick = { navController.navigate(Destinations.MealPlanHistory.route) }
+                )
+            }
         }
     ) { paddingValues ->
         Column(

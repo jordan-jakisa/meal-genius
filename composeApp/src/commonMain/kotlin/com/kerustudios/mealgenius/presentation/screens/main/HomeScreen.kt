@@ -1,15 +1,41 @@
 package com.kerustudios.mealgenius.presentation.screens.main
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 
 /**
  * Home screen displaying the current meal plan and navigation options
@@ -17,14 +43,15 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onViewMealPlanDetails: () -> Unit,
-    onShuffleMeals: () -> Unit,
-    onRefreshPlan: () -> Unit,
-    onChatWithAssistant: () -> Unit,
-    onViewHistory: () -> Unit,
-    onOpenSettings: () -> Unit,
-    onViewShoppingList: () -> Unit
+    navController: NavController
 ) {
+    val onViewMealPlanDetails: () -> Unit = {}
+    val onShuffleMeals: () -> Unit = {}
+    val onRefreshPlan: () -> Unit = {}
+    {}
+    {}
+    val onOpenSettings: () -> Unit = {}
+    {}
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,25 +69,25 @@ fun HomeScreen(
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
                     selected = true,
-                    onClick = { /* Already on home screen */ }
+                    onClick = { navController.navigate(Destinations.Home.route) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
                     label = { Text("Chat") },
                     selected = false,
-                    onClick = onChatWithAssistant
+                    onClick = { navController.navigate(Destinations.Chatbot.route) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Shopping") },
                     label = { Text("Shopping") },
                     selected = false,
-                    onClick = onViewShoppingList
+                    onClick = { navController.navigate(Destinations.ShoppingList.route) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.List, contentDescription = "History") },
                     label = { Text("History") },
                     selected = false,
-                    onClick = onViewHistory
+                    onClick = { navController.navigate(Destinations.MealPlanHistory.route) }
                 )
             }
         }

@@ -1,24 +1,54 @@
 package com.kerustudios.mealgenius.presentation.screens.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 import kotlinx.coroutines.launch
 
 /**
@@ -27,10 +57,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatbotScreen(
-    onBack: () -> Unit,
-    onCustomizeMealPlan: () -> Unit,
-    onAddNewDish: () -> Unit,
-    onReceiveTips: () -> Unit
+    navController: NavController
 ) {
     // Sample chat messages
     val initialMessages = listOf(
@@ -50,11 +77,38 @@ fun ChatbotScreen(
             TopAppBar(
                 title = { Text("Chat with Assistant") },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
+        }, bottomBar = {
+            BottomAppBar {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text("Home") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.Home.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
+                    label = { Text("Chat") },
+                    selected = true,
+                    onClick = { navController.navigate(Destinations.Chatbot.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Shopping") },
+                    label = { Text("Shopping") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.ShoppingList.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "History") },
+                    label = { Text("History") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.MealPlanHistory.route) }
+                )
+            }
         }
     ) { paddingValues ->
         Column(
@@ -97,7 +151,7 @@ fun ChatbotScreen(
                             )
                             scrollState.animateScrollToItem(messages.size - 1)
                         }
-                        onCustomizeMealPlan()
+                        //onCustomizeMealPlan()
                     },
                     modifier = Modifier.weight(1f)
                 ) {
@@ -117,7 +171,7 @@ fun ChatbotScreen(
                             )
                             scrollState.animateScrollToItem(messages.size - 1)
                         }
-                        onAddNewDish()
+                        //onAddNewDish()
                     },
                     modifier = Modifier.weight(1f)
                 ) {
@@ -137,7 +191,7 @@ fun ChatbotScreen(
                             )
                             scrollState.animateScrollToItem(messages.size - 1)
                         }
-                        onReceiveTips()
+                        //onReceiveTips()
                     },
                     modifier = Modifier.weight(1f)
                 ) {

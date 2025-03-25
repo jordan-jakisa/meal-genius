@@ -1,19 +1,45 @@
 package com.kerustudios.mealgenius.presentation.screens.main
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.kerustudios.mealgenius.presentation.navigation.Destinations
 
 /**
  * Screen displaying the shopping list
@@ -21,9 +47,11 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListScreen(
-    onBack: () -> Unit,
-    onExportList: () -> Unit
+    navController: NavController
 ) {
+    val onBack: () -> Unit = { navController.navigateUp() }
+    val onExportList: () -> Unit = {}
+
     // Sample shopping list data grouped by category
     val categories = listOf(
         ShoppingCategory(
@@ -87,6 +115,34 @@ fun ShoppingListScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            BottomAppBar {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text("Home") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.Home.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
+                    label = { Text("Chat") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.Chatbot.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Shopping") },
+                    label = { Text("Shopping") },
+                    selected = true,
+                    onClick = { navController.navigate(Destinations.ShoppingList.route) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "History") },
+                    label = { Text("History") },
+                    selected = false,
+                    onClick = { navController.navigate(Destinations.MealPlanHistory.route) }
+                )
+            }
         }
     ) { paddingValues ->
         Column(
@@ -175,7 +231,7 @@ private fun ShoppingCategorySection(
                 category.items.forEach { item ->
                     ShoppingItemRow(
                         item = item,
-                        isChecked = checkedItems["${category.name}:${item.name}"] ?: false,
+                        isChecked = checkedItems["${category.name}:${item.name}"] == true,
                         onCheckedChange = { isChecked ->
                             checkedItems["${category.name}:${item.name}"] = isChecked
                         }

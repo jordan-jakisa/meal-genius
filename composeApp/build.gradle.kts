@@ -48,14 +48,14 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            // Voyager Navigation
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.screenmodel)
-            implementation(libs.voyager.tab.navigator)
-            implementation(libs.voyager.transitions)
+            // Navigation
+            implementation(libs.androidx.navigation.compose)
 
             // DataStore Preferences
             implementation(libs.datastore.preferences.core)
+
+            // serialization
+            implementation(libs.kotlinx.serialization.json)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
